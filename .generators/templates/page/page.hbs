@@ -1,0 +1,131 @@
+'use client';
+
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button, Flex, message } from 'antd';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  PlusCircleOutlined,
+} from '@ant-design/icons';
+import { ColumnsType } from 'antd/es/table';
+import { Page } from 'admiral';
+import Datatable from 'admiral/table/datatable/index';
+
+import { useFilter, usePaginateFilter } from '@/hooks/datatable/use-filter';
+import { makeSource } from '@/utils/data-table';
+import { TGet{{pascalCase moduleName}}sResponse } from '@/api/{{dashCase moduleName}}';
+
+import { useDelete{{pascalCase moduleName}}Mutation } from './_hooks/use-delete-{{dashCase moduleName}}-mutation';
+import { use{{pascalCase moduleName}}sQuery } from './_hooks/use-{{dashCase moduleName}}s-query';
+
+const {{pascalCase moduleName}}sPage = () => {
+  const router = useRouter();
+  const { implementDataTable, filter } = useFilter();
+
+  const paginateFilter = usePaginateFilter();
+
+  const {{camelCase moduleName}}sQuery = use{{pascalCase moduleName}}sQuery(paginateFilter);
+
+  const delete{{pascalCase moduleName}}Mutation = useDelete{{pascalCase moduleName}}Mutation();
+
+  const columns: ColumnsType<TGet{{pascalCase moduleName}}sResponse> = [
+    {
+      dataIndex: 'fullname',
+      key: 'fullname',
+      title: 'Name',
+    },
+    {
+      dataIndex: 'email',
+      title: 'Email',
+      key: 'email',
+    },
+    {
+      dataIndex: 'role',
+      title: 'Role',
+      key: 'role',
+      render: (_, record) => {
+        return record.role?.name;
+      },
+    },
+    {
+      dataIndex: 'createdAt',
+      title: 'Created At',
+      key: 'createdAt',
+      render: (_, record) => {
+        return new Date(record.created_at).toLocaleString();
+      },
+    },
+    {
+      dataIndex: 'Action',
+      title: 'Action',
+      key: 'Action',
+      render: (_, record) => {
+        return (
+          <Flex>
+            <Link href={`/{{dashCase moduleName}}s/${record?.id}`}>
+              <Button
+                type="link"
+                icon={<EyeOutlined style={ { color: "green" } } />}
+              />
+            </Link>
+            <Button
+              type="link"
+              icon={<DeleteOutlined style={ { color: "red" } } />}
+              onClick={() => {
+                delete{{pascalCase moduleName}}Mutation.mutate(record.id, {
+                  onSuccess: () => {
+                    message.success('{{pascalCase moduleName}} berhasil dihapus');
+                    router.refresh();
+                  },
+                });
+              }}
+            />
+            <Link href={`/{{dashCase moduleName}}s/${record?.id}/update`}>
+              <Button type="link" icon={<EditOutlined />} />
+            </Link>
+          </Flex>
+        );
+      },
+    },
+  ];
+
+  const breadcrumbs = [
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+    },
+    {
+      label: '{{pascalCase moduleName}}s',
+      path: '/{{dashCase moduleName}}s',
+    },
+  ];
+
+  return (
+    <Page
+      title="{{pascalCase moduleName}}s"
+      breadcrumbs={breadcrumbs}
+      topActions={<TopAction />}
+      noStyle
+    >
+      <Datatable
+        onChange={implementDataTable}
+        rowKey="id"
+        showRowSelection={false}
+        loading={ {{camelCase moduleName}}sQuery.isLoading}
+        source={makeSource({{camelCase moduleName}}sQuery.data)}
+        columns={columns}
+        search={filter.search}
+      />
+    </Page>
+  );
+};
+
+export default {{pascalCase moduleName}}sPage;
+
+const TopAction = () => (
+  <Link href="/{{dashCase moduleName}}s/create">
+    <Button icon={<PlusCircleOutlined />}>Add {{pascalCase moduleName}}</Button>
+  </Link>
+);

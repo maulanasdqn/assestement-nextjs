@@ -1,0 +1,64 @@
+'use client';
+
+import { useParams, useRouter } from 'next/navigation';
+import { Col, Row, message } from 'antd';
+import { Page } from 'admiral';
+
+import { TUpdate{{pascalCase moduleName}}Payload } from '@/api/{{dashCase moduleName}}';
+
+import { Form{{pascalCase moduleName}} } from '../../_components/form-{{dashCase moduleName}}';
+import { use{{pascalCase moduleName}}Query } from '../_hooks/use-{{dashCase moduleName}}-query';
+import { useUpdate{{pascalCase moduleName}}Mutation } from './_hooks/use-update-{{dashCase moduleName}}-mutation';
+
+const Update{{pascalCase moduleName}}Page = () => {
+  const params = useParams();
+  const router = useRouter();
+
+  const {{camelCase moduleName}}Id = typeof params.id === 'string' ? params.id : '';
+
+  const {{camelCase moduleName}}Query = use{{pascalCase moduleName}}Query({{camelCase moduleName}}Id);
+
+  const update{{pascalCase moduleName}}Mutation = useUpdate{{pascalCase moduleName}}Mutation({{camelCase moduleName}}Id);
+
+  const handleOnFinish = (data: TUpdate{{pascalCase moduleName}}Payload) =>
+    update{{pascalCase moduleName}}Mutation.mutate(data, {
+      onSuccess: () => {
+        router.push('/{{camelCase moduleName}}s');
+        message.success('{{pascalCase moduleName}} berhasil diupdate');
+      },
+      onError: () => {
+        message.error('{{pascalCase moduleName}} gagal diupdate');
+      },
+    });
+
+  const breadcrumb = [
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+    },
+    {
+      label: '{{pascalCase moduleName}}s',
+      path: '/{{dashCase moduleName}}s',
+    },
+  ];
+
+  return (
+    <Page title="Update {{pascalCase moduleName}}" breadcrumbs={breadcrumb}>
+      <Row>
+        <Col span={12} style={ { margin: 'auto' } }>
+          <Form{{pascalCase moduleName}}
+            formProps={ {
+              onFinish: handleOnFinish,
+              initialValues: {{camelCase moduleName}}Query.data,
+              disabled: {{camelCase moduleName}}Query.isLoading,
+            } }
+            error={update{{pascalCase moduleName}}Mutation.error}
+            loading={update{{pascalCase moduleName}}Mutation.isPending}
+          />
+        </Col>
+      </Row>
+    </Page>
+  );
+};
+
+export default Update{{pascalCase moduleName}}Page;

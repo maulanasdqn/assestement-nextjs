@@ -1,0 +1,9 @@
+import { delete{{pascalCase moduleName}} } from '@/api/{{dashCase moduleName}}';
+import { useMutation } from '@/app/_hooks/request/use-mutation';
+
+export const useDelete{{pascalCase moduleName}}Mutation = () => {
+  return useMutation({
+    mutationKey: ['delete-{{dashCase moduleName}}'],
+    mutationFn: delete{{pascalCase moduleName}},
+  });
+};

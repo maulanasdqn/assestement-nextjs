@@ -1,0 +1,9 @@
+import { create{{pascalCase moduleName}} } from '@/api/{{dashCase moduleName}}';
+import { useMutation } from '@/hooks/request/use-mutation';
+
+export const useCreate{{pascalCase moduleName}}Mutation = () => {
+  return useMutation({
+    mutationKey: ['create-{{dashCase moduleName}}'],
+    mutationFn: create{{pascalCase moduleName}},
+  });
+};

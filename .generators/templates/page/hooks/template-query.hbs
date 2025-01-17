@@ -1,0 +1,9 @@
+import { TGet{{pascalCase moduleName}}sParams, get{{pascalCase moduleName}}s } from '@/api/{{dashCase moduleName}}';
+import { useQuery } from '@/app/_hooks/request/use-query';
+
+export const use{{pascalCase moduleName}}sQuery = (params: TGet{{pascalCase moduleName}}sParams) => {
+  return useQuery({
+    queryKey: ['{{pascalCase moduleName}}s', params],
+    queryFn: () => get{{pascalCase moduleName}}s(params),
+  });
+};

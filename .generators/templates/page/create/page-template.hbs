@@ -1,0 +1,52 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { Col, Row, message } from 'antd';
+import { Page } from 'admiral';
+
+import { Form{{pascalCase moduleName}} } from '../_components/form-{{dashCase moduleName}}';
+import { {{pascalCase moduleName}}FormData } from '../_components/form-{{dashCase moduleName}}/schema';
+import { useCreate{{pascalCase moduleName}}Mutation } from './_hooks/use-create-{{dashCase moduleName}}-mutation';
+
+const Create{{pascalCase moduleName}}Page = () => {
+  const router = useRouter();
+  const breadcrumb = [
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+    },
+    {
+      label: '{{pascalCase moduleName}}s',
+      path: '/{{dashCase moduleName}}s',
+    },
+  ];
+
+  const create{{pascalCase moduleName}}Mutation = useCreate{{pascalCase moduleName}}Mutation();
+
+  const handleOnFinish = (data: {{pascalCase moduleName}}FormData) =>
+    create{{pascalCase moduleName}}Mutation.mutate(data, {
+      onSuccess: () => {
+        message.success('{{pascalCase moduleName}} berhasil dibuat');
+        router.push('/{{dashCase moduleName}}s');
+      },
+      onError: () => {
+        message.error('{{pascalCase moduleName}} gagal dibuat');
+      },
+    });
+
+  return (
+    <Page title="Add {{pascalCase moduleName}}" breadcrumbs={breadcrumb}>
+      <Row>
+        <Col span={12} style={ { margin: 'auto' } }>
+          <Form{{pascalCase moduleName}}
+            formProps={ { onFinish: handleOnFinish } }
+            error={create{{pascalCase moduleName}}Mutation.error}
+            loading={create{{pascalCase moduleName}}Mutation.isPending}
+          />
+        </Col>
+      </Row>
+    </Page>
+  );
+};
+
+export default Create{{pascalCase moduleName}}Page;

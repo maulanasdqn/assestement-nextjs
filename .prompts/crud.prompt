@@ -1,0 +1,62 @@
+temperature: 0.0
+maxTokens: 100000
+---
+<system>
+You are an expert frontend React programmer with a strong understanding of project structure, naming conventions, and code consistency standards.
+</system>
+
+# User Input
+
+{{{ input }}}
+
+# Task:
+- Generate all necessary files and complete code directly for a new CRUD feature including:
+  - `Page Index`
+  - `Page Create`
+  - `Page Edit`
+  - `Page Detail`
+- Adjust or add to `NavbarMenu` constants as needed to match new feature.
+- Display CLI commands for creating directories and files (e.g., `mkdir`, `touch`), and include confirmation outputs for each created item.
+
+# Instruction:
+1. **Generate All Files in a Single Step**:
+   - Produce **full code** for each file mentioned, without partial steps.
+   - Ensure every file is written out with all necessary imports, hooks, components, types, etc.
+   
+2. **Adhere to Project Structure**:
+   - Follow exact paths, naming conventions, and coding standards as shown in provided examples and in the “CONTEXT” files.
+   - Use provided API schema to write API calls and types.
+   - Include dependencies in the correct files if they aren't already present.
+
+3. **Output**:
+   - Output everything in a single response, with complete code and commands.
+   - Show all CLI commands for creating directories and files, and mark each file creation as “done” to ensure completeness.
+   - **Avoid using commands to open files for editing (e.g., `nano`)**, as the code will be directly implemented.
+
+4. **Proactive Clarifications with Minimal Questions**:
+   - If user not specified the module name, prompt as follows:
+     - "Before we continue, please confirm these things:
+         - Module name"
+   - If user not specified the **API structure**, prompt as follows:
+       - "Before we continue, please confirm these things:
+          - API Structure"
+
+5. Simple and clear message for the user:
+   - "Please wait while I generate the CRUD feature for the District module."
+
+==============================
+# CONTEXT
+
+## API files
+- **Note**: Retrieve all files related to API endpoints, service functions, and schema definitions to ensure accurate API integration.
+- **Retrieve**: `src/api/*`
+{{{ folder "src/api" }}}
+
+## Example UI Code
+- **Note**: Retrieve page, components, hooks, utilities, or reusable functions that may be required for CRUD operations, specifically focusing on file paths like `(authenticated)/iam/users`.
+- **Retrieve**: `src/app/(authenticated)/iam/users/*`
+
+{{{ folder "src/app/(authenticated)/iam/users"  }}}
+
+## Menu
+{{{ file "./src/app/_components/ui/layout/menu.tsx" }}}

@@ -1,0 +1,129 @@
+import { TResponseData, TResponsePaginate } from '@/common/types/response';
+
+export type TGet{{ pascalCase moduleName }}sParams = {
+  page?: number;
+  limit?: number;
+  sort?: string;
+  order?: string;
+  search?: string;
+};
+
+export type TGet{{pascalCase moduleName}}sResponse = {
+  id: string;
+  name: string;
+  created_at: string;
+};
+
+export const get{{pascalCase moduleName}}s = (
+  params: TGet{{pascalCase moduleName}}sParams
+): Promise<TResponsePaginate<TGet{{pascalCase moduleName}}sResponse>> =>
+  Promise.resolve({
+    items: [
+      {
+        id: '1',
+        name: 'Name',
+        created_at: '2023-01-01T00:00:00.000Z',
+      },
+      {
+        id: '2',
+        name: 'User',
+        created_at: '2023-01-02T00:00:00.000Z',
+      },
+      {
+        id: '3',
+        name: 'Admin',
+        created_at: '2023-01-03T00:00:00.000Z',
+      },
+    ],
+    meta: {
+      page: 1,
+      per_page: 10,
+      total: 1,
+      total_page: 1,
+    },
+    status_code: 200,
+    version: '1.0.0',
+  });
+
+export type TGet{{pascalCase moduleName}}Response = {
+  id: string;
+  name: string;
+  created_at: string;
+};
+
+export const get{{pascalCase moduleName}} = (id: string): Promise<TResponseData<TGet{{pascalCase moduleName}}Response>> =>
+  Promise.resolve({
+    data: {
+      id: '1',
+      name: 'Name',
+      created_at: '2023-01-01T00:00:00.000Z',
+    },
+    status_code: 200,
+    version: '1.0.0',
+  });
+
+export type TCreate{{pascalCase moduleName}}Payload = {
+  name: string;
+};
+
+export type TCreate{{pascalCase moduleName}}Response = {
+  id: string;
+  name: string;
+  created_at: string;
+};
+
+export const create{{pascalCase moduleName}} = (
+  data: TCreate{{pascalCase moduleName}}Payload
+): Promise<TResponseData<TCreate{{pascalCase moduleName}}Response>> =>
+  Promise.resolve({
+    data: {
+      id: '1',
+      name: 'Name',
+      created_at: '2023-01-01T00:00:00.000Z',
+    },
+    status_code: 200,
+    version: '1.0.0',
+  });
+
+export type TUpdate{{pascalCase moduleName}}Payload = {
+  name: string;
+};
+
+export type TUpdate{{pascalCase moduleName}}Response = {
+  id: string;
+  name: string;
+  created_at: string;
+};
+
+export const update{{pascalCase moduleName}} = (
+  id: string,
+  data: TUpdate{{pascalCase moduleName}}Payload
+): Promise<TResponseData<TUpdate{{pascalCase moduleName}}Response>> =>
+  Promise.resolve({
+    data: {
+      id: '1',
+      name: 'Name',
+      created_at: '2023-01-01T00:00:00.000Z',
+    },
+    status_code: 200,
+    version: '1.0.0',
+  });
+
+export type TDelete{{pascalCase moduleName}}Response = {
+  id: string;
+  name: string;
+  created_at: string;
+};
+
+export const delete{{pascalCase moduleName}} = (
+  id: string
+): Promise<TResponseData<TDelete{{pascalCase moduleName}}Response>> =>
+  Promise.resolve({
+    data: {
+      id: '1',
+      name: 'Name',
+      created_at: '2023-01-01T00:00:00.000Z',
+    },
+    status_code: 200,
+    version: '1.0.0',
+  });

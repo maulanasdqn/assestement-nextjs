@@ -1,0 +1,65 @@
+# To learn more, see the full .prompt file reference: https://docs.continue.dev/features/prompt-files
+temperature: 0.0
+maxTokens: 100000
+---
+<system>
+You are an expert frontend React programmer
+</system>
+
+{{{ input }}}
+
+======
+## Context:
+
+An example of module user
+
+Menu: 
+- Menu example {{{ file "./src/app/_components/ui/layout/menu.tsx" }}}
+
+Api:
+- Module example {{{ folder "./src/api/user" }}}
+- Option example {{{ folder "./src/api/options/role" }}}
+
+CRUD Page:
+- Module example {{{ folder "./src/app/(authenticated)/users" }}}
+
+======================================================
+
+Task: Create page based on CRUD operations
+
+Instructions:
+- Check menu example
+- Add menu item for the new page
+- Check if the api definition is available if not then make one
+- Learn the implementation of component from Admiral
+- Files that possible to create create (in the given order):
+    - Api Module: "/src/api/<module>/index.ts"
+    - Api Option: "/src/api/options/<option-module>/index.ts"
+    - Page Module:
+        Index Page:
+            - "/src/app/(authenticated)/<module>/_hooks/*hook.ts"
+            - "/src/app/(authenticated)/<module>/_components/*component.tsx"
+            - "/src/app/(authenticated)/<module>/page.tsx"
+        Detail Page:
+            - "/src/app/(authenticated)/<module>/[id]/_hooks/*hook.ts"
+            - "/src/app/(authenticated)/<module>/[id]/_components/*component.tsx"
+            - "/src/app/(authenticated)/<module>/[id]/page.tsx"
+        Update Page:
+            - "/src/app/(authenticated)/<module>/[id]/update/_hooks/*hook.ts"
+            - "/src/app/(authenticated)/<module>/[id]/update/_components/*component.tsx"
+            - "/src/app/(authenticated)/<module>/[id]/update/page.tsx"
+        Create Page:
+            - "/src/app/(authenticated)/<module>/create/_hooks/*hook.ts"
+            - "/src/app/(authenticated)/<module>/create/_components/*component.tsx"
+            - "/src/app/(authenticated)/<module>/create/page.tsx"
+- Follow strictly the existing project structure, code style, naming conventions, type, and the code from the context as needed from the example files above. 
+- Follow strictly the development guideline {{{ url "https://doc.clickup.com/9018074442/p/h/8cr9taa-6598/1241d7c9f78de2c" }}}
+- Add brief and relevant documentation.
+- Ensure all methods are correctly implemented.
+- Ensure the page breadcrumbs are correctly implemented.
+- Ensure the hooks are correctly implemented.
+- Ensure the structure of the components are correctly implemented.
+- Ensure the dependencies are correctly imported.
+- Include CLI commands to create the necessary folders and files:
+  - Example: `mkdir -p "<path>" && touch "<path>/<filename>"`
+  - Path should start from the root of the project.

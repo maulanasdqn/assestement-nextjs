@@ -1,0 +1,51 @@
+'use client';
+
+import { useParams } from 'next/navigation';
+import { Page, Section } from 'admiral';
+import { Descriptions } from 'antd';
+
+import { use{{pascalCase moduleName}}Query } from './_hooks/use-{{dashCase moduleName}}-query';
+
+const Detail{{pascalCase moduleName}}Page = () => {
+  const params = useParams();
+  const {{camelCase moduleName}}Id = typeof params.id === 'string' ? params.id : '';
+  const {{camelCase moduleName}}Query = use{{pascalCase moduleName}}Query({{camelCase moduleName}}Id);
+
+  const breadcrumbs = [
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+    },
+    {
+      label: '{{pascalCase moduleName}}',
+      path: '/{{dashCase moduleName}}s',
+    },
+    {
+      label: {{camelCase moduleName}}Query.data?.data.fullname ?? '',
+      path: `/{{dashCase moduleName}}s/${ {{camelCase moduleName}}Query.data?.data.id}`,
+    },
+  ];
+
+  return (
+    <Page title="Detail {{pascalCase moduleName}}" breadcrumbs={breadcrumbs} noStyle>
+      <Section loading={ {{camelCase moduleName}}Query.isLoading} title="Detail {{pascalCase moduleName}}">
+        <Descriptions bordered column={2}>
+          <Descriptions.Item span={2} label="Name">
+            { {{camelCase moduleName}}Query.data?.data.fullname}
+          </Descriptions.Item>
+          <Descriptions.Item span={2} label="Email">
+            { {{camelCase moduleName}}Query.data?.data.email}
+          </Descriptions.Item>
+          <Descriptions.Item span={2} label="Address">
+            { {{camelCase moduleName}}Query.data?.data.address}
+          </Descriptions.Item>
+          <Descriptions.Item span={2} label="Role">
+            { {{camelCase moduleName}}Query.data?.data.role.name}
+          </Descriptions.Item>
+        </Descriptions>
+      </Section>
+    </Page>
+  );
+};
+
+export default Detail{{pascalCase moduleName}}Page;

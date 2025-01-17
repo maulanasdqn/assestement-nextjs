@@ -1,0 +1,46 @@
+'use client';
+
+import { FC } from 'react';
+import { Button, Form, Input } from 'antd';
+import { FormProps } from 'antd/lib';
+import { createZodSync } from '@/utils/zod-sync';
+import { TResponseError } from '@/common/types/response';
+import { useFormErrorHandling } from '@/hooks/form/use-form-error-handling';
+
+import { {{pascalCase moduleName}}FormSchema } from './schema';
+
+type Props = {
+  formProps: FormProps;
+  loading: boolean;
+  error: TResponseError | null;
+};
+
+const rule = createZodSync({{pascalCase moduleName}}FormSchema);
+
+export const Form{{pascalCase moduleName}}: FC<Props> = ({ formProps, error, loading }) => {
+  const [form] = Form.useForm();
+
+  useFormErrorHandling(form, error);
+
+  return (
+    <Form {...formProps} form={form} layout="vertical">
+      <Form.Item label="Full Name" name="fullname" rules={[rule]}>
+        <Input placeholder="Admin" />
+      </Form.Item>
+      <Form.Item label="Password" name="password" rules={[rule]}>
+        <Input type="password" placeholder="Tulis password anda" />
+      </Form.Item>
+      <Form.Item label="email" name="email" rules={[rule]}>
+        <Input type="email" placeholder="johndoe@gmail.com" />
+      </Form.Item>
+      <Form.Item label="Address" name="address" rules={[rule]}>
+        <Input placeholder="Jalan No.7 Malang" />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={loading}>
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
