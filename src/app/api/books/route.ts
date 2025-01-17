@@ -35,7 +35,12 @@ export const POST = async (request: Request) => {
           id,
           name: author.name,
         };
-      }),
+      }) || [
+        {
+          id: 1,
+          name: 'Gak tau ko tanya saya',
+        },
+      ],
       isbn: valid.data.isbn,
       published_date: valid.data.published_date,
       quantity: valid.data.quantity,

@@ -1,4 +1,4 @@
-import { TGetBorrowingsParams, getBorrowings } from '@/api/borrowings';
+import { TGetBorrowingsParams, getBorrowings } from '@/api/borrowing';
 import { useQuery } from '@/app/_hooks/request/use-query';
 
 export const useBorrowingOptionQuery = (params?: TGetBorrowingsParams) => {

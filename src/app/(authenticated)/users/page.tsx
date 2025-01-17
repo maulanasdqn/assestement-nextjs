@@ -1,6 +1,6 @@
 'use client';
 
-import { Page } from 'admiral';
+import { ActionTable, Page } from 'admiral';
 import { Button, Flex, message } from 'antd';
 import {
   DeleteOutlined,
@@ -11,17 +11,17 @@ import {
 import { useRouter } from 'next/navigation';
 import Datatable from 'admiral/table/datatable/index';
 import { ColumnsType } from 'antd/es/table';
-import { useFilter, usePaginateFilter } from '@/hooks/datatable/use-filter';
+import { useFilter } from '@/hooks/datatable/use-filter';
 import Link from 'next/link';
 import { TGetUsersResponse } from '@/api/user';
 import { useDeleteUserMutation } from './_hooks/use-delete-user-mutation';
 import { useUsersQuery } from './_hooks/use-users-query';
 import { makeSortOrder, makeSource } from '@/utils/data-table';
+import { filterSort } from '@/common/table/filters';
 
-// User Index Page
 const UsersPage = () => {
   const router = useRouter();
-  const { filters, pagination, handleChange } = useFilter();
+  const { filters, pagination, handleChange, setFilters } = useFilter();
 
   const usersQuery = useUsersQuery({
     ...pagination,
@@ -115,15 +115,41 @@ const UsersPage = () => {
       topActions={<TopAction />}
       noStyle
     >
-      <Datatable
-        onChange={handleChange}
-        rowKey="id"
-        showRowSelection={false}
-        loading={usersQuery.isLoading}
-        source={makeSource(usersQuery.data)}
-        columns={columns}
-        search={filters.search}
+      <ActionTable
+        onSearch={(value) => setFilters({ search: value })}
+        searchValue={filters.search}
+        onFiltersChange={(values) =>
+          setFilters(values as Record<string, string>)
+        }
+        filters={[
+          filterSort({
+            options: [
+              { label: 'ID', value: 'id' },
+              { label: 'Name', value: 'name' },
+              { label: 'Email', value: 'email' },
+            ],
+            searchParams: filters,
+          }),
+        ]}
       />
+      <div
+        style={{
+          backgroundColor: 'white',
+          padding: '5px',
+          marginTop: '10px',
+        }}
+      >
+        <Datatable
+          hideSearch
+          onChange={handleChange}
+          rowKey="id"
+          showRowSelection={false}
+          loading={usersQuery.isLoading}
+          source={makeSource(usersQuery.data)}
+          columns={columns}
+          search={filters.search}
+        />
+      </div>
     </Page>
   );
 };

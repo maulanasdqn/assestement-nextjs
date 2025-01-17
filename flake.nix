@@ -46,7 +46,7 @@
             name = "nodejs20.12.1-linux-x64";
             src = pkgs.fetchurl {
               url = "https://nodejs.org/dist/v20.12.1/node-v20.12.1-linux-x64.tar.gz";
-              sha256 = "sha256-8vTMvLwKRD5frevRFJoi+WCH7AnO9S/zQ6Fe6DUgbZY=";
+              sha256 = "sha256-2i9ZCjlxd5Lc+MS/a55LJpYB5s46PxUKPEs3n37qbYM=";
             };
             installPhase = ''
               echo "installing nodejs"
@@ -92,11 +92,35 @@
             pkgs.nodePackages."vscode-langservers-extracted"
             pkgs.nodePackages."@tailwindcss/language-server"
             pkgs.emmet-ls
-            (pkgs.fetchurl {
-              url = "https://registry.npmjs.org/pnpm/-/pnpm-8.14.1.tgz";
-              sha256 = "sha256-<replace-with-correct-sha256>";
+
+            (pkgs.stdenv.mkDerivation {
+              name = "pnpm-8.14.1";
+              src = pkgs.fetchurl {
+                url = "https://registry.npmjs.org/pnpm/-/pnpm-8.14.1.tgz";
+                sha256 = "sha256-LfeOZdQz12k7nT+9r0MbLZa7T5ai/+zVGlDv4W5Qpqg=";
+              };
+              installPhase = ''
+                    echo "Installing pnpm"
+                    mkdir -p $out/bin
+                    mkdir -p $out/lib/pnpm
+                    tar -xzf $src
+                    cp -r package/dist/* $out/lib/pnpm/
+
+                    # Create a wrapper script for pnpm
+                    cat > $out/bin/pnpm <<EOF
+                #!/usr/bin/env bash
+                node $out/lib/pnpm/pnpm.cjs "\$@"
+                EOF
+
+                    chmod +x $out/bin/pnpm
+              '';
             })
           ];
+
+          shellHook = ''
+            export PATH="$out/bin:$PATH"
+            echo "PNPM has been added to your environment."
+          '';
         };
       };
       flake = {};

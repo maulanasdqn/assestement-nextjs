@@ -50,7 +50,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           },
           {
             key: '5',
-            label: <Link href="/borrowing">Borrowing</Link>,
+            label: <Link href="/borrowings">Borrowing</Link>,
           },
           {
             key: '6',
