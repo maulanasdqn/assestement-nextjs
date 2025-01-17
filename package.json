@@ -12,10 +12,6 @@
     "plop": "plop"
   },
   "packageManager": "pnpm@8.14.1",
-  "engines": {
-    "pnpm": "8.14.1",
-    "node": "^20"
-  },
   "dependencies": {
     "@ant-design/icons": "^5.3.6",
     "@ant-design/nextjs-registry": "^1.0.0",
